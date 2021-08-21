@@ -3,7 +3,7 @@ import { fetchQuizQuestions } from './API';
 // Components
 import QuestionCard from './components/QuestionCard';
 // Types
-import { QuestionState, Difficulty } from './API';
+import { QuestionState, Difficulty, TotalAmount } from './API';
 // Styles
 import { GlobalStyle, Wrapper } from './App.styles';
 
@@ -14,8 +14,6 @@ export type AnswerObject = {
   correctAnswer: string;
 }
 
-const TOTAL_QUESTIONS = 10;
-
 const App = () => {
 
   const [loading, setLoading] = useState(false);
@@ -24,6 +22,10 @@ const App = () => {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [options, setOptions] = useState({
+    totalAmount: TotalAmount.FIVE,
+    difficulty: Difficulty.EASY,
+  })
 
   console.log(questions);
 
@@ -32,8 +34,8 @@ const App = () => {
     setGameOver(false);
 
     const newQuetions = await fetchQuizQuestions(
-      TOTAL_QUESTIONS,
-      Difficulty.MEDIUM,
+      options.totalAmount,
+      options.difficulty,
     );
 
     setQuestions(newQuetions);
@@ -66,7 +68,7 @@ const App = () => {
     // Move on to the next question if not the last question
     const nextQuestion = number + 1;
 
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    if (nextQuestion === options.totalAmount) {
       setGameOver(true);
     } else {
       setNumber(nextQuestion);
@@ -78,7 +80,16 @@ const App = () => {
     <GlobalStyle />
     <Wrapper>
       <h1>REACT QUIZ</h1>
-      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+      <label>Difficulty:</label>
+      <select name="difficulty" onChange={(event) => setOptions(prev => { return {...prev, difficulty: Difficulty[event.target.value as keyof typeof Difficulty]} }) }>
+        {Object.keys(Difficulty).map((item, index) => <option value={item} key={index}>{item}</option>)}
+      </select>
+      <label>Amount of questions:</label>
+      <select name="amount" onChange={(event) => setOptions(prev => { return {...prev, totalAmount: TotalAmount[event.target.value as keyof typeof TotalAmount]} }) }>
+        {Object.keys(TotalAmount).map((item, index) => {
+          return isNaN(Number(item)) && <option value={item} key={index}>{item}</option>})}
+      </select>
+      {gameOver || userAnswers.length === options.totalAmount ? (
       <button className="start" onClick={startTrivia}>
         Start
       </button>
@@ -88,14 +99,14 @@ const App = () => {
       {!loading && !gameOver && (
         <QuestionCard
           questionNr={number + 1}
-          totalQuestions={TOTAL_QUESTIONS}
+          totalQuestions={options.totalAmount}
           question={questions[number].question}
           answers={questions[number].answers}
           userAnser={userAnswers ? userAnswers[number] : undefined}
           callback={checkAnswer}
         />
       )}
-      {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
+      {!gameOver && !loading && userAnswers.length === number + 1 && number !== options.totalAmount - 1 ? (
       <button className="next" onClick={nextQuestion}>
         Next Question
       </button>
