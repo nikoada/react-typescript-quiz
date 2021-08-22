@@ -3,7 +3,7 @@ import { fetchQuizQuestions } from './API';
 // Components
 import QuestionCard from './components/QuestionCard';
 // Types
-import { QuestionState, Difficulty, TotalAmount } from './API';
+import { QuestionState, Difficulty, TotalAmount, Caterogies } from './API';
 // Styles
 import { GlobalStyle, Wrapper } from './App.styles';
 
@@ -25,6 +25,7 @@ const App = () => {
   const [options, setOptions] = useState({
     totalAmount: TotalAmount.FIVE,
     difficulty: Difficulty.EASY,
+    categories: Caterogies.BOOKS,
   })
 
   console.log(questions);
@@ -34,6 +35,7 @@ const App = () => {
     setGameOver(false);
 
     const newQuetions = await fetchQuizQuestions(
+      options.categories,
       options.totalAmount,
       options.difficulty,
     );
@@ -77,41 +79,50 @@ const App = () => {
 
   return (
     <>
-    <GlobalStyle />
-    <Wrapper>
-      <h1>REACT QUIZ</h1>
-      <label>Difficulty:</label>
-      <select name="difficulty" onChange={(event) => setOptions(prev => { return {...prev, difficulty: Difficulty[event.target.value as keyof typeof Difficulty]} }) }>
-        {Object.keys(Difficulty).map((item, index) => <option value={item} key={index}>{item}</option>)}
-      </select>
-      <label>Amount of questions:</label>
-      <select name="amount" onChange={(event) => setOptions(prev => { return {...prev, totalAmount: TotalAmount[event.target.value as keyof typeof TotalAmount]} }) }>
-        {Object.keys(TotalAmount).map((item, index) => {
-          return isNaN(Number(item)) && <option value={item} key={index}>{item}</option>})}
-      </select>
-      {gameOver || userAnswers.length === options.totalAmount ? (
-      <button className="start" onClick={startTrivia}>
-        Start
-      </button>
-      ) : null }
-      { !gameOver ? <p className="score">Score: {score}</p> : null }
-      {loading && <p>Loading Questions ...</p>}
-      {!loading && !gameOver && (
-        <QuestionCard
-          questionNr={number + 1}
-          totalQuestions={options.totalAmount}
-          question={questions[number].question}
-          answers={questions[number].answers}
-          userAnser={userAnswers ? userAnswers[number] : undefined}
-          callback={checkAnswer}
-        />
-      )}
-      {!gameOver && !loading && userAnswers.length === number + 1 && number !== options.totalAmount - 1 ? (
-      <button className="next" onClick={nextQuestion}>
-        Next Question
-      </button>
-      ) : null}
-    </Wrapper>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>REACT QUIZ</h1>
+        {gameOver || userAnswers.length === options.totalAmount ? (
+          <>
+        <label>Select Category: </label>
+        <select name="caterogies" onChange={(event) => setOptions(prev => { return { ...prev, categories: Caterogies[event.target.value as keyof typeof Caterogies] } })}>
+          {Object.keys(Caterogies).map((item, index) => {
+            return isNaN(Number(item)) && <option value={item} key={index}>{item}</option>
+          })}
+        </select>
+        <label>Difficulty:</label>
+        <select name="difficulty" onChange={(event) => setOptions(prev => { return { ...prev, difficulty: Difficulty[event.target.value as keyof typeof Difficulty] } })}>
+          {Object.keys(Difficulty).map((item, index) => <option value={item} key={index}>{item}</option>)}
+        </select>
+        <label>Amount of questions:</label>
+        <select name="amount" onChange={(event) => setOptions(prev => { return { ...prev, totalAmount: TotalAmount[event.target.value as keyof typeof TotalAmount] } })}>
+          {Object.keys(TotalAmount).map((item, index) => {
+            return isNaN(Number(item)) && <option value={item} key={index}>{item}</option>
+          })}
+        </select>
+          <button className="start" onClick={startTrivia}>
+            Start
+          </button>
+          </>
+        ) : null}
+        {!gameOver ? <p className="score">Score: {score}</p> : null}
+        {loading && <p>Loading Questions ...</p>}
+        {!loading && !gameOver && (
+          <QuestionCard
+            questionNr={number + 1}
+            totalQuestions={options.totalAmount}
+            question={questions[number].question}
+            answers={questions[number].answers}
+            userAnser={userAnswers ? userAnswers[number] : undefined}
+            callback={checkAnswer}
+          />
+        )}
+        {!gameOver && !loading && userAnswers.length === number + 1 && number !== options.totalAmount - 1 ? (
+          <button className="next" onClick={nextQuestion}>
+            Next Question
+          </button>
+        ) : null}
+      </Wrapper>
     </>
   );
 }
