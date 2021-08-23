@@ -22,7 +22,6 @@ export enum Difficulty {
 export enum TotalAmount {
     FIVE = 5,
     TEN = 10,
-    FIFTHEEN = 15,
     TWENTY = 20,
 }
 
@@ -38,19 +37,17 @@ export enum Caterogies {
     COMPUTERS = 18,
     MATHEMATICS = 19,
     MYTHOLOGY = 20,
-    
-        //   <option value="21">Sports</option>
-        //   <option value="22">Geography</option>
-        //   <option value="23">History</option>
-        //   <option value="24">Politics</option>
-        //   <option value="25">Art</option>
-        //   <option value="26">Celebrities</option>
-        //   <option value="27">Animals</option>
-        //   <option value="28">Vehicles</option>
-        //   <option value="29">Entertainment: Comics</option>
-        //   <option value="30">Science: Gadgets</option>
-        //   <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
-        //   <option value="32">Entertainment: Cartoon &amp; Animations</option>
+    SPORTS = 21,
+    GEOGRAPHY = 22,
+    HISTORY = 23,
+    POLITICS = 24,
+    ART = 25,
+    ANIMALS = 27,
+    VEHICLES = 28,
+    COMICS = 29,
+    GADGETS = 30,
+    ANIME_MANGA = 31,
+    CARTOON_ANIMATIONS = 32,
 }
 
 export const fetchQuizQuestions = async (category: Caterogies, amount: number, difficulty: Difficulty) => {
