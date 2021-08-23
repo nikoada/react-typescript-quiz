@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.js": "/react-typescript-quiz/static/js/main.9cade62c.chunk.js",
+    "main.js.map": "/react-typescript-quiz/static/js/main.9cade62c.chunk.js.map",
+    "runtime-main.js": "/react-typescript-quiz/static/js/runtime-main.b8fa9c91.js",
+    "runtime-main.js.map": "/react-typescript-quiz/static/js/runtime-main.b8fa9c91.js.map",
+    "static/js/2.58a1abcd.chunk.js": "/react-typescript-quiz/static/js/2.58a1abcd.chunk.js",
+    "static/js/2.58a1abcd.chunk.js.map": "/react-typescript-quiz/static/js/2.58a1abcd.chunk.js.map",
+    "index.html": "/react-typescript-quiz/index.html",
+    "static/js/2.58a1abcd.chunk.js.LICENSE.txt": "/react-typescript-quiz/static/js/2.58a1abcd.chunk.js.LICENSE.txt",
+    "static/media/silvio-kundt-pOZGBVICxDc-unsplash.ef3f1aac.jpg": "/react-typescript-quiz/static/media/silvio-kundt-pOZGBVICxDc-unsplash.ef3f1aac.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b8fa9c91.js",
+    "static/js/2.58a1abcd.chunk.js",
+    "static/js/main.9cade62c.chunk.js"
+  ]
+}
