@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { fetchQuizQuestions } from './API';
 // Components
 import QuestionCard from './components/QuestionCard';
+import Select from './components/Select';
 // Types
 import { QuestionState, Difficulty, TotalAmount, Caterogies } from './API';
 // Styles
@@ -77,6 +78,18 @@ const App = () => {
     }
   };
 
+  const setCaterogy = (event: any) => {
+    setOptions(prev => { return { ...prev, categories: Caterogies[event.target.value as keyof typeof Caterogies] } })
+  }
+
+  const setDifficulty = (event: any) => {
+    setOptions(prev => { return { ...prev, difficulty: Difficulty[event.target.value as keyof typeof Difficulty] } })
+  }
+
+  const setAmount = (event: any) => {
+    setOptions(prev => { return { ...prev, totalAmount: TotalAmount[event.target.value as keyof typeof TotalAmount] } })
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -84,22 +97,9 @@ const App = () => {
         <h1>REACT QUIZ</h1>
         {gameOver || userAnswers.length === options.totalAmount ? (
           <>
-        <label>Select Category: </label>
-        <select name="caterogies" onChange={(event) => setOptions(prev => { return { ...prev, categories: Caterogies[event.target.value as keyof typeof Caterogies] } })}>
-          {Object.keys(Caterogies).map((item, index) => {
-            return isNaN(Number(item)) && <option value={item} key={index}>{item}</option>
-          })}
-        </select>
-        <label>Difficulty:</label>
-        <select name="difficulty" onChange={(event) => setOptions(prev => { return { ...prev, difficulty: Difficulty[event.target.value as keyof typeof Difficulty] } })}>
-          {Object.keys(Difficulty).map((item, index) => <option value={item} key={index}>{item}</option>)}
-        </select>
-        <label>Amount of questions:</label>
-        <select name="amount" onChange={(event) => setOptions(prev => { return { ...prev, totalAmount: TotalAmount[event.target.value as keyof typeof TotalAmount] } })}>
-          {Object.keys(TotalAmount).map((item, index) => {
-            return isNaN(Number(item)) && <option value={item} key={index}>{item}</option>
-          })}
-        </select>
+          <Select title="Category" enumName={Caterogies} setOption={setCaterogy}/>
+          <Select title="Difficulty" enumName={Difficulty} setOption={setDifficulty}/>
+          <Select title="Amount" enumName={TotalAmount} setOption={setAmount}/>
           <button className="start" onClick={startTrivia}>
             Start
           </button>
