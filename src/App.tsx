@@ -78,15 +78,15 @@ const App = () => {
     }
   };
 
-  const setCaterogy = (event: any) => {
+  const setCaterogy = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setOptions(prev => { return { ...prev, categories: Caterogies[event.target.value as keyof typeof Caterogies] } })
   }
 
-  const setDifficulty = (event: any) => {
+  const setDifficulty = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setOptions(prev => { return { ...prev, difficulty: Difficulty[event.target.value as keyof typeof Difficulty] } })
   }
 
-  const setAmount = (event: any) => {
+  const setAmount = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setOptions(prev => { return { ...prev, totalAmount: TotalAmount[event.target.value as keyof typeof TotalAmount] } })
   }
 
