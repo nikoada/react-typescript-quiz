@@ -97,9 +97,9 @@ const App = () => {
         <h1>REACT QUIZ</h1>
         {gameOver || userAnswers.length === options.totalAmount ? (
           <>
-          <Select title="Category" enumName={Caterogies} setOption={setCaterogy} isNumber={false}/>
-          <Select title="Difficulty" enumName={Difficulty} setOption={setDifficulty} isNumber={false}/>
-          <Select title="Amount of questions" enumName={TotalAmount} setOption={setAmount} isNumber={true}/>
+          <Select title="Category" enumName={Caterogies} setOption={setCaterogy} />
+          <Select title="Difficulty" enumName={Difficulty} setOption={setDifficulty} />
+          <Select title="Amount of questions" enumName={TotalAmount} setOption={setAmount} />
           <button className="start" onClick={startTrivia}>
             Start
           </button>
